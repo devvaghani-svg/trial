@@ -20,11 +20,19 @@
       "type": "product-grid",
       "name": "Product Grid",
       "settings": {
-        "collection": "main-collection",
         "heading": "Featured products",
         "products_limit": 8
       }
+    },
+    "custom_section_bRieWy": {
+      "type": "custom-section",
+      "name": "t:general.custom_section",
+      "settings": {}
     }
   },
-  "order": ["hero_banner_AiN3fp", "product_grid_99YYr7"]
+  "order": [
+    "hero_banner_AiN3fp",
+    "product_grid_99YYr7",
+    "custom_section_bRieWy"
+  ]
 }
