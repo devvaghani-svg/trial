@@ -126,3 +126,41 @@ input[type="search"]::-moz-search-clear-button {
   --tw-translate-x: 1.25rem;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
+
+
+.custom-header{
+  background:#f5f3f2;
+  padding:20px 40px;
+}
+
+.header-container{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.header-logo img{
+  height:40px;
+}
+
+.header-nav ul{
+  display:flex;
+  gap:40px;
+  list-style:none;
+}
+
+.header-nav a{
+  text-decoration:none;
+  color:#0c5c57;
+  font-weight:500;
+}
+
+.header-icons{
+  display:flex;
+  gap:20px;
+}
+
+.header-icons img{
+  width:22px;
+  height:22px;
+}

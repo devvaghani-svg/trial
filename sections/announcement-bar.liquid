@@ -1,0 +1,24 @@
+{%- if section.settings.text != blank -%}
+  <div class="w-full bg-[#0a3836] text-white text-sm text-center py-2.5 px-4 font-medium tracking-wide">
+    {{ section.settings.text }}
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement text",
+      "default": "15% Off over ₹5000 Use Code WELLIEWOW"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar"
+    }
+  ]
+}
+{% endschema %}
