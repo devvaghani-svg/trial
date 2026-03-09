@@ -10,6 +10,8 @@
             src="{{ section.settings.logo | image_url }}" 
             alt="{{ shop.name }}"
             style="max-width: {{ section.settings.logo_width }}px;"
+            width="100"
+            height="100"
           >
         {% else %}
           <span>{{ shop.name }}</span>
@@ -73,6 +75,11 @@
       "id": "menu",
       "label": "Navigation Menu",
       "default": "main-menu"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Header"
     }
   ]
 }
