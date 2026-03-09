@@ -1,14 +1,95 @@
-<div class="w-full px-8">
-  <h1 class="text-2xl font-bold text-center">{{ product.title }}</h1>
-  {{ product.media}}
+<section class="custom-product">
+
+<div class="product-wrapper">
+
+  <!-- LEFT IMAGE AREA -->
+  <div class="product-gallery">
+
+    <div class="main-image">
+      <img id="main-product-image" src="{{ product.featured_image | image_url: width: 900 }}">
+    </div>
+
+    <div class="thumbnail-images">
+      {% for image in product.images %}
+        <img 
+          src="{{ image | image_url: width: 200 }}"
+          onclick="changeImage(this)"
+        >
+      {% endfor %}
+    </div>
+
+  </div>
+
+
+  <!-- RIGHT PRODUCT INFO -->
+  <div class="product-info">
+
+    <span class="product-badge">India's #1 Advanced Dog Food</span>
+
+    <h1 class="product-title">{{ product.title }}</h1>
+
+    <div class="price-area">
+
+      <span class="sale-price">
+        {{ product.selected_or_first_available_variant.price | money }}
+      </span>
+
+      {% if product.selected_or_first_available_variant.compare_at_price %}
+      <span class="compare-price">
+        {{ product.selected_or_first_available_variant.compare_at_price | money }}
+      </span>
+      {% endif %}
+
+    </div>
+
+    <p class="tax-info">MRP Inclusive of all taxes</p>
+
+
+    <!-- VARIANT SELECTOR -->
+    <div class="variant-selector">
+
+      <p class="variant-title">SELECT SIZE</p>
+
+      {% for variant in product.variants %}
+        <button class="variant-btn"
+        data-variant-id="{{ variant.id }}">
+          {{ variant.title }}
+        </button>
+      {% endfor %}
+
+    </div>
+
+
+    <!-- ADD TO CART FORM -->
+    <form method="post" action="/cart/add">
+
+      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+      <div class="cart-row">
+
+        <input type="number" name="quantity" value="1" min="1">
+
+        <button type="submit" class="add-to-cart">
+          ADD TO CART
+        </button>
+
+      </div>
+
+    </form>
+
+    <button class="buy-now">BUY IT NOW</button>
+
+  </div>
+
 </div>
 
-{% schema %}
-{
-  "name": "t:general.product",
-  "settings": [],
-  "disabled_on": {
-    "groups": ["header", "footer"]
-  }
+</section>
+
+
+<script>
+
+function changeImage(el){
+document.getElementById("main-product-image").src = el.src;
 }
-{% endschema %}
+
+</script>
