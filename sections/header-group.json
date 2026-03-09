@@ -13,10 +13,14 @@
   "sections": {
     "header": {
       "type": "header",
+      "custom_css": [],
       "settings": {
+        "logo_width": 150,
         "menu": "main-menu"
       }
     }
   },
-  "order": ["header"]
+  "order": [
+    "header"
+  ]
 }
