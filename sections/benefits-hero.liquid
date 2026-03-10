@@ -165,7 +165,7 @@
           </div>
         {% endfor %}
       {% else %}
-        {% assign default_benefits = "Gut Health Support|4 Billion CFUs of live strains to build good bacteria and defend against allergies.,Immune Boost|Strengthen your dog's natural defenses and improve overall well-being daily.,Coat & Skin Health|Reduces tear stains, dull coat, and itching caused by digestive imbalance.,Better Breath|Targets the root cause of bad breath with probiotics and digestive enzymes." | split: "," %}
+        {% assign default_benefits = "Gut Health Support|4 Billion CFUs of live strains to build good bacteria and defend against allergies.~Immune Boost|Strengthen your dog's natural defenses and improve overall well-being daily.~Coat & Skin Health|Reduces tear stains, dull coat, and itching caused by digestive imbalance.~Better Breath|Targets the root cause of bad breath with probiotics and digestive enzymes." | split: "~" %}
         {% for item in default_benefits %}
           {% assign parts = item | split: "|" %}
           <div class="benefit-feature">

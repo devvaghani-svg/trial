@@ -135,17 +135,19 @@
                 loading="lazy"
               >
             {% endif %}
-            <div class="ingredient-card__badge">
-              {% if block.settings.badge_icon %}
-                <img
-                  src="{{ block.settings.badge_icon | image_url: width: 60 }}"
-                  alt="{{ block.settings.badge_label | escape }}"
-                  loading="lazy"
-                >
-              {% elsif block.settings.badge_label != blank %}
-                <span class="ingredient-card__badge-text">{{ block.settings.badge_label }}</span>
-              {% endif %}
-            </div>
+            {% if block.settings.badge_icon or block.settings.badge_label != blank %}
+              <div class="ingredient-card__badge">
+                {% if block.settings.badge_icon %}
+                  <img
+                    src="{{ block.settings.badge_icon | image_url: width: 60 }}"
+                    alt="{{ block.settings.badge_label | escape }}"
+                    loading="lazy"
+                  >
+                {% elsif block.settings.badge_label != blank %}
+                  <span class="ingredient-card__badge-text">{{ block.settings.badge_label }}</span>
+                {% endif %}
+              </div>
+            {% endif %}
           </div>
           <div class="ingredient-card__body">
             {% if block.settings.name != blank %}

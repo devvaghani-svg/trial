@@ -28,7 +28,7 @@
     <!-- RIGHT: Info -->
     <div class="product-info">
 
-      <span class="top-badge">India's #1 Advanced Dog For Food</span>
+      <span class="top-badge">{{ section.settings.badge_text | default: "India's #1 Advanced Dog For Food" }}</span>
 
       <h1 class="product-title">{{ product.title }}</h1>
 
@@ -39,7 +39,7 @@
         {% endif %}
       </div>
 
-      <p class="tax">MRP Inclusive of all taxes</p>
+      <p class="tax">{{ section.settings.tax_note | default: "MRP Inclusive of all taxes" }}</p>
 
       <div class="benefit-box">
         <span class="benefit-icon">
@@ -48,14 +48,14 @@
           </svg>
         </span>
         <div class="benefit-text">
-          <strong>30% Digestive Health Improvement</strong>
-          <p>Results may vary based on pet size, diet, and <a href="{{ section.settings.reports_url }}" class="see-reports">See Reports</a></p>
+          <strong>{{ section.settings.benefit_title | default: "30% Digestive Health Improvement" }}</strong>
+          <p>{{ section.settings.benefit_desc | default: "Results may vary based on pet size, diet, and" }} <a href="{{ section.settings.reports_url }}" class="see-reports">See Reports</a></p>
         </div>
       </div>
 
       <!-- VARIANTS -->
       <div class="variant-selector">
-        <p class="variant-title">SELECT SIZE</p>
+        <p class="variant-title">{{ section.settings.variant_label | default: "SELECT SIZE" }}</p>
         <div class="variant-buttons">
           {% for variant in product.variants %}
             <button
@@ -95,7 +95,7 @@
         </div>
       </form>
 
-      <button class="buy-now">BUY IT NOW</button>
+      <button class="buy-now">{{ section.settings.buy_now_label | default: "BUY IT NOW" }}</button>
 
       <!-- COUPON CARDS -->
       {% if section.settings.coupon_1_code != blank or section.settings.coupon_2_code != blank %}
@@ -261,9 +261,45 @@
   "name": "Product Hero",
   "settings": [
     {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Top Badge Text",
+      "default": "India's #1 Advanced Dog For Food"
+    },
+    {
+      "type": "text",
+      "id": "tax_note",
+      "label": "Tax Note",
+      "default": "MRP Inclusive of all taxes"
+    },
+    {
+      "type": "text",
+      "id": "benefit_title",
+      "label": "Benefit Title",
+      "default": "30% Digestive Health Improvement"
+    },
+    {
+      "type": "text",
+      "id": "benefit_desc",
+      "label": "Benefit Description",
+      "default": "Results may vary based on pet size, diet, and"
+    },
+    {
       "type": "url",
       "id": "reports_url",
       "label": "See Reports URL"
+    },
+    {
+      "type": "text",
+      "id": "variant_label",
+      "label": "Variant Selector Label",
+      "default": "SELECT SIZE"
+    },
+    {
+      "type": "text",
+      "id": "buy_now_label",
+      "label": "Buy Now Button Label",
+      "default": "BUY IT NOW"
     },
     {
       "type": "text",
