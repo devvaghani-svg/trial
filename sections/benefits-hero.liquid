@@ -45,6 +45,19 @@
   max-width: 874px;
 }
 
+.benefits-hero__illustration {
+  position: absolute;
+  bottom: 0;
+  right: 80px;
+  width: 200px;
+  pointer-events: none;
+}
+
+.benefits-hero__illustration img {
+  width: 100%;
+  display: block;
+}
+
 .benefit-feature {
   display: flex;
   gap: 16px;
@@ -87,6 +100,10 @@
 }
 
 @media (max-width: 767px) {
+  .benefits-hero__illustration {
+    display: none;
+  }
+
   .benefits-hero {
     padding: 48px 18px;
   }
@@ -165,6 +182,16 @@
         {% endfor %}
       {% endif %}
     </div>
+
+    {% if section.settings.illustration %}
+      <div class="benefits-hero__illustration">
+        <img
+          src="{{ section.settings.illustration | image_url: width: 400 }}"
+          alt="{{ section.settings.illustration.alt | default: '' | escape }}"
+          loading="lazy"
+        >
+      </div>
+    {% endif %}
   </div>
 </section>
 
@@ -177,6 +204,11 @@
       "id": "heading",
       "label": "Heading",
       "default": "Benefits your pet can feel."
+    },
+    {
+      "type": "image_picker",
+      "id": "illustration",
+      "label": "Decorative Illustration"
     }
   ],
   "blocks": [

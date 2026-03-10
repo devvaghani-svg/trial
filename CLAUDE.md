@@ -36,6 +36,25 @@ Sections use inline `{% stylesheet %}` tags for component-scoped styles. Tailwin
 - **Blocks**: `blocks/` directory holds reusable nested components (group.liquid, text.liquid)
 - Merchant customization exposed through `{% schema %}` JSON at the bottom of each section file
 
+### Snippet Conventions
+- Snippets declare parameters via `assign param = param | default: value` at the top
+- Required params guard with `unless param != empty ... break ... endunless`
+- Icons are individual snippets: `{% render 'icon-{name}' %}` (27 icons available in `snippets/icon-*.liquid`)
+
+### base.css Utilities
+- `spacing-block` / `spacing-block-start` / `spacing-block-end` — Responsive vertical padding (32px mobile / 50px desktop); use on section wrappers instead of raw padding classes
+- `animate-scroll` — Infinite horizontal marquee animation
+- `scrollbar-hide` — Cross-browser scrollbar hiding
+
+### Brand Tokens
+- Pink: `#E52888`, Teal: `#025A60`, Cream background: `#F9F3F1`
+
+### JS Loading Order
+`core-assets.liquid` (head) loads `lazy-video.js`. `product-form.js` and `cart-drawer.js` are loaded separately via explicit `<script defer>` tags in `theme.liquid` — their asset files are currently empty placeholders.
+
+### Formatting
+Prettier + `prettier-plugin-tailwindcss` is configured. Run `npx prettier --write .` to format.
+
 ### Key Files
 - `layout/theme.liquid` — Main HTML wrapper; loads core assets via `{% render 'core-assets' %}`
 - `snippets/core-assets.liquid` — Central asset loading (base.css, tailwind.css, JS files)

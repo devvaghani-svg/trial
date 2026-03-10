@@ -21,14 +21,48 @@
   color: #3a3a3e;
 }
 
+.feeding-guide__table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.feeding-guide__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.feeding-guide__table thead tr {
+  background: #025A60;
+  color: #fff;
+}
+
+.feeding-guide__table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.feeding-guide__table td {
+  padding: 12px 16px;
+  color: #3a3a3e;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.feeding-guide__table tbody tr:nth-child(even) {
+  background: #f5f5f0;
+}
+
 .feeding-guide__content {
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.7;
-  color: #444;
+  color: #666;
+  margin-top: 16px;
 }
 
 .feeding-guide__content p {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .feeding-guide__image-wrap {
@@ -62,8 +96,13 @@
     font-size: 28px;
   }
 
-  .feeding-guide__content {
-    font-size: 14px;
+  .feeding-guide__table {
+    font-size: 13px;
+  }
+
+  .feeding-guide__table th,
+  .feeding-guide__table td {
+    padding: 10px 12px;
   }
 }
 {% endstylesheet %}
@@ -72,13 +111,38 @@
   <div class="feeding-guide__inner">
     <div class="feeding-guide__text">
       <h2 class="feeding-guide__heading">{{ section.settings.heading | default: 'Feeding guide' }}</h2>
-      <div class="feeding-guide__content">
-        {% if section.settings.content != blank %}
-          {{ section.settings.content }}
-        {% else %}
-          <p>Follow the recommended feeding guide based on your dog's weight and size for optimal results.</p>
-        {% endif %}
+
+      <div class="feeding-guide__table-wrap">
+        <table class="feeding-guide__table">
+          <thead>
+            <tr>
+              <th>Dog Weight</th>
+              <th>Daily</th>
+              <th>Monthly QTY</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if section.blocks.size > 0 %}
+              {% for block in section.blocks %}
+                <tr {{ block.shopify_attributes }}>
+                  <td>{{ block.settings.weight }}</td>
+                  <td>{{ block.settings.daily }}</td>
+                  <td>{{ block.settings.monthly_qty }}</td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr><td>Under 10 kg</td><td>2 Stick</td><td>2 pack</td></tr>
+              <tr><td>10–30 kg</td><td>3/5 Stick</td><td>1 pack</td></tr>
+              <tr><td>31–50 kg</td><td>5/5 Stick</td><td>1 pack</td></tr>
+              <tr><td>Over 50 kg</td><td>2 Stick</td><td>1 pack</td></tr>
+            {% endif %}
+          </tbody>
+        </table>
       </div>
+
+      {% if section.settings.content != blank %}
+        <div class="feeding-guide__content">{{ section.settings.content }}</div>
+      {% endif %}
     </div>
 
     <div class="feeding-guide__image-wrap">
@@ -109,12 +173,38 @@
     {
       "type": "richtext",
       "id": "content",
-      "label": "Content"
+      "label": "Supplementary Content"
     },
     {
       "type": "image_picker",
       "id": "image",
       "label": "Product Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "table_row",
+      "name": "Table Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "weight",
+          "label": "Dog Weight",
+          "placeholder": "e.g. Under 10 kg"
+        },
+        {
+          "type": "text",
+          "id": "daily",
+          "label": "Daily Amount",
+          "placeholder": "e.g. 2 Stick"
+        },
+        {
+          "type": "text",
+          "id": "monthly_qty",
+          "label": "Monthly QTY",
+          "placeholder": "e.g. 2 pack"
+        }
+      ]
     }
   ],
   "presets": [

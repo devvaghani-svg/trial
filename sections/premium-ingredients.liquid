@@ -25,6 +25,7 @@
 }
 
 .ingredient-card__image-wrap {
+  position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
@@ -37,8 +38,39 @@
   object-fit: cover;
 }
 
+.ingredient-card__badge {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #025A60;
+  border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.ingredient-card__badge img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.ingredient-card__badge-text {
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  line-height: 1.1;
+}
+
 .ingredient-card__body {
-  padding: 16px;
+  padding: 24px 16px 14px;
 }
 
 .ingredient-card__name {
@@ -52,6 +84,24 @@
   font-size: 14px;
   color: #555;
   line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.ingredient-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ingredient-card__tag {
+  background: #D4E391;
+  color: #3a3a3e;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 @media (max-width: 767px) {
@@ -85,6 +135,17 @@
                 loading="lazy"
               >
             {% endif %}
+            <div class="ingredient-card__badge">
+              {% if block.settings.badge_icon %}
+                <img
+                  src="{{ block.settings.badge_icon | image_url: width: 60 }}"
+                  alt="{{ block.settings.badge_label | escape }}"
+                  loading="lazy"
+                >
+              {% elsif block.settings.badge_label != blank %}
+                <span class="ingredient-card__badge-text">{{ block.settings.badge_label }}</span>
+              {% endif %}
+            </div>
           </div>
           <div class="ingredient-card__body">
             {% if block.settings.name != blank %}
@@ -93,16 +154,32 @@
             {% if block.settings.description != blank %}
               <p class="ingredient-card__desc">{{ block.settings.description }}</p>
             {% endif %}
+            {% assign tag_list = block.settings.benefit_tags | split: ',' %}
+            {% if tag_list.size > 0 and block.settings.benefit_tags != blank %}
+              <div class="ingredient-card__tags">
+                {% for tag in tag_list %}
+                  <span class="ingredient-card__tag">{{ tag | strip }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
           </div>
         </div>
       {% endfor %}
     {% else %}
       {% for i in (1..4) %}
         <div class="ingredient-card">
-          <div class="ingredient-card__image-wrap"></div>
+          <div class="ingredient-card__image-wrap">
+            <div class="ingredient-card__badge">
+              <span class="ingredient-card__badge-text">Ca</span>
+            </div>
+          </div>
           <div class="ingredient-card__body">
             <h3 class="ingredient-card__name">Ingredient Name</h3>
             <p class="ingredient-card__desc">Key benefit description for this premium ingredient.</p>
+            <div class="ingredient-card__tags">
+              <span class="ingredient-card__tag">Immunity</span>
+              <span class="ingredient-card__tag">Digestion</span>
+            </div>
           </div>
         </div>
       {% endfor %}
@@ -132,6 +209,19 @@
           "label": "Image"
         },
         {
+          "type": "image_picker",
+          "id": "badge_icon",
+          "label": "Badge Icon (optional)",
+          "info": "Small icon shown in the circular badge overlapping the image"
+        },
+        {
+          "type": "text",
+          "id": "badge_label",
+          "label": "Badge Label",
+          "info": "Shown if no badge icon is set (e.g. Ca, Fe, Zn)",
+          "placeholder": "Ca"
+        },
+        {
           "type": "text",
           "id": "name",
           "label": "Ingredient Name"
@@ -140,6 +230,12 @@
           "type": "textarea",
           "id": "description",
           "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "benefit_tags",
+          "label": "Benefit Tags",
+          "info": "Comma-separated tags shown as pills, e.g. Immunity, Digestion"
         }
       ]
     }

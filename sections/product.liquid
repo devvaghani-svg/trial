@@ -6,9 +6,9 @@
     <div class="product-gallery">
 
       <div class="main-image">
-        <button type="button" class="gallery-arrow gallery-prev" onclick="galleryPrev()" aria-label="Previous image">&#8249;</button>
+        <button type="button" class="gallery-arrow gallery-prev" data-gallery-prev aria-label="Previous image">&#8249;</button>
         <img id="main-product-image" src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.featured_image.alt | escape }}">
-        <button type="button" class="gallery-arrow gallery-next" onclick="galleryNext()" aria-label="Next image">&#8250;</button>
+        <button type="button" class="gallery-arrow gallery-next" data-gallery-next aria-label="Next image">&#8250;</button>
       </div>
 
       <div class="thumbnail-row">
@@ -17,7 +17,7 @@
             src="{{ image | image_url: width: 200 }}"
             class="thumb{% if forloop.first %} active-thumb{% endif %}"
             data-full="{{ image | image_url: width: 900 }}"
-            onclick="changeImage(this)"
+            data-gallery-thumb
             alt="{{ image.alt | escape }}"
           >
         {% endfor %}
@@ -62,8 +62,8 @@
               type="button"
               class="variant-pill{% if variant.id == product.selected_or_first_available_variant.id %} active{% endif %}"
               data-variant-id="{{ variant.id }}"
-              data-price="{{ variant.price }}"
-              data-compare-price="{{ variant.compare_at_price }}"
+              data-price-formatted="{{ variant.price | money }}"
+              data-compare-formatted="{% if variant.compare_at_price %}{{ variant.compare_at_price | money }}{% endif %}"
             >
               {% if variant.metafields.custom.badge != blank %}
                 <span class="variant-badge">{{ variant.metafields.custom.badge }}</span>
@@ -80,7 +80,7 @@
 
         <div class="cart-row">
           <div class="qty-wrapper">
-            <button type="button" class="qty-btn minus">-</button>
+            <button type="button" class="qty-btn minus">&#8722;</button>
             <input type="number" name="quantity" value="1" min="1" class="qty-input">
             <button type="button" class="qty-btn plus">+</button>
           </div>
@@ -166,79 +166,93 @@
 
 
 <script>
-  const galleryImages = [
-    {% for image in product.images %}"{{ image | image_url: width: 900 }}"{% unless forloop.last %},{% endunless %}{% endfor %}
-  ];
-  let currentIndex = 0;
+  (function() {
+    const galleryImages = [
+      {% for image in product.images %}"{{ image | image_url: width: 900 }}"{% unless forloop.last %},{% endunless %}{% endfor %}
+    ];
+    let currentIndex = 0;
 
-  function changeImage(el) {
-    document.getElementById('main-product-image').src = el.dataset.full;
-    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active-thumb'));
-    el.classList.add('active-thumb');
-    currentIndex = Array.from(document.querySelectorAll('.thumb')).indexOf(el);
-  }
+    const mainImg = document.getElementById('main-product-image');
+    const thumbs = () => document.querySelectorAll('[data-gallery-thumb]');
 
-  function galleryNext() {
-    currentIndex = (currentIndex + 1) % galleryImages.length;
-    updateMainImage(currentIndex);
-  }
+    const updateMainImage = (index) => {
+      if (!mainImg || !galleryImages[index]) return;
+      mainImg.src = galleryImages[index];
+      thumbs().forEach((t, i) => t.classList.toggle('active-thumb', i === index));
+    };
 
-  function galleryPrev() {
-    currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
-    updateMainImage(currentIndex);
-  }
-
-  function updateMainImage(index) {
-    document.getElementById('main-product-image').src = galleryImages[index];
-    const thumbs = document.querySelectorAll('.thumb');
-    thumbs.forEach(t => t.classList.remove('active-thumb'));
-    if (thumbs[index]) thumbs[index].classList.add('active-thumb');
-  }
-
-  // Variant switching
-  document.querySelectorAll('.variant-pill').forEach(btn => {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.variant-pill').forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-      document.getElementById('variant-id').value = this.dataset.variantId;
-
-      const price = parseInt(this.dataset.price);
-      const comparePrice = parseInt(this.dataset.comparePrice);
-      if (price) document.getElementById('product-price').textContent = '₹' + (price / 100).toFixed(2);
-
-      const comparePriceEl = document.getElementById('product-compare-price');
-      if (comparePriceEl) {
-        if (comparePrice) {
-          comparePriceEl.textContent = '₹' + (comparePrice / 100).toFixed(2);
-          comparePriceEl.style.display = '';
-        } else {
-          comparePriceEl.style.display = 'none';
-        }
-      }
-    });
-  });
-
-  // Quantity
-  document.querySelector('.plus').addEventListener('click', function() {
-    let input = document.querySelector('.qty-input');
-    input.value = parseInt(input.value) + 1;
-  });
-
-  document.querySelector('.minus').addEventListener('click', function() {
-    let input = document.querySelector('.qty-input');
-    if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
-  });
-
-  // Coupon copy
-  document.querySelectorAll('.coupon-copy-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const svgBackup = this.innerHTML;
-      navigator.clipboard.writeText(this.dataset.code).then(() => {
-        this.textContent = '✓';
-        setTimeout(() => { this.innerHTML = svgBackup; }, 2000);
+    // Thumbnail click
+    thumbs().forEach((thumb, i) => {
+      thumb.addEventListener('click', () => {
+        currentIndex = i;
+        updateMainImage(currentIndex);
       });
     });
-  });
+
+    // Prev/next arrows
+    const prevBtn = document.querySelector('[data-gallery-prev]');
+    const nextBtn = document.querySelector('[data-gallery-next]');
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+        updateMainImage(currentIndex);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % galleryImages.length;
+        updateMainImage(currentIndex);
+      });
+    }
+
+    // Variant switching
+    const priceEl = document.getElementById('product-price');
+    const comparePriceEl = document.getElementById('product-compare-price');
+
+    document.querySelectorAll('.variant-pill').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.variant-pill').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        const variantInput = document.getElementById('variant-id');
+        if (variantInput) variantInput.value = this.dataset.variantId;
+
+        if (priceEl && this.dataset.priceFormatted) {
+          priceEl.textContent = this.dataset.priceFormatted;
+        }
+
+        if (comparePriceEl) {
+          const compareFormatted = this.dataset.compareFormatted;
+          comparePriceEl.classList.toggle('hidden', !compareFormatted);
+          if (compareFormatted) comparePriceEl.textContent = compareFormatted;
+        }
+      });
+    });
+
+    // Quantity stepper
+    const qtyInput = document.querySelector('.qty-input');
+    const plusBtn = document.querySelector('.plus');
+    const minusBtn = document.querySelector('.minus');
+    if (plusBtn && qtyInput) {
+      plusBtn.addEventListener('click', () => { qtyInput.value = parseInt(qtyInput.value) + 1; });
+    }
+    if (minusBtn && qtyInput) {
+      minusBtn.addEventListener('click', () => {
+        if (parseInt(qtyInput.value) > 1) qtyInput.value = parseInt(qtyInput.value) - 1;
+      });
+    }
+
+    // Coupon copy
+    document.querySelectorAll('.coupon-copy-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const svgBackup = this.innerHTML;
+        navigator.clipboard.writeText(this.dataset.code).then(() => {
+          this.textContent = '✓';
+          setTimeout(() => { this.innerHTML = svgBackup; }, 2000);
+        });
+      });
+    });
+  })();
 </script>
 
 

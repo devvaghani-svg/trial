@@ -343,7 +343,7 @@ input[type="search"]::-moz-search-clear-button {
 }
 
 .top-badge {
-  background: #E52888;
+  background: #025A60;
   color: white;
   padding: 4px 12px;
   border-radius: 20px;
@@ -439,8 +439,8 @@ input[type="search"]::-moz-search-clear-button {
 }
 
 .variant-pill.active {
-  background: #E52888;
-  border-color: #E52888;
+  background: #025A60;
+  border-color: #025A60;
   color: white;
 }
 
@@ -469,31 +469,41 @@ input[type="search"]::-moz-search-clear-button {
 .qty-wrapper {
   display: flex;
   align-items: center;
-  border: 1.5px solid #E52888;
+  border: 1.5px solid #025A60;
   border-radius: 10px;
   overflow: hidden;
-  width: 112px;
+  width: 128px;
   height: 44px;
 }
 
 .qty-btn {
-  width: 36px;
+  width: 40px;
   height: 44px;
-  border: none;
-  background: #fff5fb;
-  font-size: 20px;
-  cursor: pointer;
-  color: #E52888;
   flex-shrink: 0;
+  border: none;
+  background: #025A60;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .qty-input {
   flex: 1;
+  min-width: 0;
+  width: 0;
   text-align: center;
   border: none;
+  padding: 0;
   font-size: 16px;
+  font-weight: 600;
   color: #3a3a3e;
-  background: transparent;
+  background: #fff;
+  -moz-appearance: textfield;
 }
 
 .qty-input::-webkit-inner-spin-button,
@@ -503,7 +513,7 @@ input[type="search"]::-moz-search-clear-button {
 }
 
 .add-cart {
-  background: #E52888;
+  background: #025A60;
   color: white;
   border: none;
   padding: 12px 30px;
@@ -595,7 +605,7 @@ input[type="search"]::-moz-search-clear-button {
   gap: 19px;
   white-space: nowrap;
   animation: marqueeMove 20s linear infinite;
-  padding: 0 16px;
+  padding-inline-end: 19px;
   align-items: center;
 }
 
