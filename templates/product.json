@@ -1,16 +1,58 @@
 {
   "sections": {
     "main": {
-      "type": "product",
-      "settings": {}
+      "type": "product"
     },
     "reviews": {
-      "type": "customer_review",
-      "settings": {}
+      "type": "customer_review"
+    },
+    "love_at_first_bite": {
+      "type": "love-at-first-bite"
+    },
+    "product_description": {
+      "type": "product-description"
+    },
+    "premium_ingredients": {
+      "type": "premium-ingredients"
+    },
+    "feeding_guide": {
+      "type": "feeding-guide"
+    },
+    "benefits_hero": {
+      "type": "benefits-hero"
+    },
+    "start_your_journey": {
+      "type": "start-your-journey"
+    },
+    "right_for_my_dog": {
+      "type": "right-for-my-dog"
+    },
+    "you_might_also_like": {
+      "type": "product-also-like"
+    },
+    "vet_check": {
+      "type": "vet-check"
+    },
+    "faq": {
+      "type": "faq"
+    },
+    "certified_trusted": {
+      "type": "certified-trusted"
     }
   },
   "order": [
     "main",
-    "reviews"
+    "reviews",
+    "love_at_first_bite",
+    "product_description",
+    "premium_ingredients",
+    "feeding_guide",
+    "benefits_hero",
+    "start_your_journey",
+    "right_for_my_dog",
+    "you_might_also_like",
+    "vet_check",
+    "faq",
+    "certified_trusted"
   ]
 }
