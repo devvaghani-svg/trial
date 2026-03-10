@@ -1,50 +1,322 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
-      "type": "product"
+      "type": "product",
+      "settings": {
+        "reports_url": "",
+        "coupon_1_price": "Get it for ₹3,190",
+        "coupon_1_label": "Copy code to get 10% off",
+        "coupon_1_code": "",
+        "coupon_2_price": "Get it for ₹3,190",
+        "coupon_2_label": "Copy code to get 10% off",
+        "coupon_2_code": ""
+      }
     },
     "reviews": {
-      "type": "customer_review"
+      "type": "customer_review",
+      "blocks": {
+        "review_FgVHMr": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_3463981.png",
+            "rating": 5,
+            "review": "",
+            "author": ""
+          }
+        },
+        "review_rmQLCD": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_3463981.png",
+            "rating": 5,
+            "review": "",
+            "author": ""
+          }
+        },
+        "review_hqyYj6": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/Rectangle_3463981.png",
+            "rating": 5,
+            "review": "",
+            "author": ""
+          }
+        }
+      },
+      "block_order": [
+        "review_FgVHMr",
+        "review_rmQLCD",
+        "review_hqyYj6"
+      ],
+      "settings": {
+        "heading": "Hear from our Customers!"
+      }
     },
     "love_at_first_bite": {
-      "type": "love-at-first-bite"
-    },
-    "product_description": {
-      "type": "product-description"
+      "type": "love-at-first-bite",
+      "blocks": {
+        "video_item_8TfAU9": {
+          "type": "video_item",
+          "settings": {
+            "thumbnail": "shopify://shop_images/Instagram_story_-_5.png",
+            "video_url": "https://www.youtube.com/shorts/e1nUnkDS80Y?feature=share",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod nisi vel consectetur interdum, vitae facilisis arcu condimentum.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod nisi vel consectetur interdum, vitae facilisis arcu condimentum."
+          }
+        },
+        "video_item_3CeAbH": {
+          "type": "video_item",
+          "settings": {
+            "thumbnail": "shopify://shop_images/Instagram_story_-_6.png",
+            "video_url": "https://www.youtube.com/shorts/e1nUnkDS80Y?feature=share",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod nisi vel consectetur interdum, vitae facilisis arcu condimentum.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod nisi vel consectetur interdum, vitae facilisis arcu condimentum."
+          }
+        },
+        "video_item_6yt96W": {
+          "type": "video_item",
+          "settings": {
+            "thumbnail": "shopify://shop_images/Instagram_story_-_8.png",
+            "video_url": "https://www.youtube.com/shorts/e1nUnkDS80Y?feature=share",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod nisi vel consectetur interdum, vitae facilisis arcu condimentum.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod nisi vel consectetur interdum, vitae facilisis arcu condimentum."
+          }
+        },
+        "video_item_Vtik8x": {
+          "type": "video_item",
+          "settings": {
+            "thumbnail": "shopify://shop_images/Instagram_story_-_9.png",
+            "video_url": "https://www.youtube.com/shorts/e1nUnkDS80Y?feature=share",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod nisi vel consectetur interdum, vitae facilisis arcu condimentum.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod nisi vel consectetur interdum, vitae facilisis arcu condimentum."
+          }
+        }
+      },
+      "block_order": [
+        "video_item_8TfAU9",
+        "video_item_3CeAbH",
+        "video_item_6yt96W",
+        "video_item_Vtik8x"
+      ],
+      "settings": {
+        "heading": "Love at First Bite.",
+        "subheading": "Real dogs. Real reactions. Zero convincing required.",
+        "description_title": "Description"
+      }
     },
     "premium_ingredients": {
-      "type": "premium-ingredients"
+      "type": "premium-ingredients",
+      "blocks": {
+        "ingredient_pNirxm": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/image_2932.png",
+            "name": "Fresh Chicken",
+            "description": "Premium source of Fresh, tasty protein. Supports tissue repair, growth, and overall strength."
+          }
+        },
+        "ingredient_kGiEqD": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/image_2932_2.png",
+            "name": "Fresh Chicken",
+            "description": "Premium source of Fresh, tasty protein. Supports tissue repair, growth, and overall strength."
+          }
+        },
+        "ingredient_jfx3Aq": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/image_2932_3.png",
+            "name": "Fresh Chicken",
+            "description": "Premium source of Fresh, tasty protein. Supports tissue repair, growth, and overall strength."
+          }
+        },
+        "ingredient_jGqLxB": {
+          "type": "ingredient",
+          "settings": {
+            "image": "shopify://shop_images/image_2932_1.png",
+            "name": "Fresh Chicken",
+            "description": "Premium source of Fresh, tasty protein. Supports tissue repair, growth, and overall strength."
+          }
+        }
+      },
+      "block_order": [
+        "ingredient_pNirxm",
+        "ingredient_kGiEqD",
+        "ingredient_jfx3Aq",
+        "ingredient_jGqLxB"
+      ],
+      "settings": {
+        "heading": "Premium Ingredients"
+      }
     },
     "feeding_guide": {
-      "type": "feeding-guide"
+      "type": "feeding-guide",
+      "settings": {
+        "heading": "Feeding guide",
+        "content": "",
+        "image": "shopify://shop_images/2150930449_1.png"
+      }
     },
     "benefits_hero": {
-      "type": "benefits-hero"
+      "type": "benefits-hero",
+      "settings": {
+        "heading": "Benefits your pet can feel."
+      }
     },
     "start_your_journey": {
-      "type": "start-your-journey"
+      "type": "start-your-journey",
+      "settings": {
+        "heading": "Start Your Journey With Wellie",
+        "image": "shopify://shop_images/2150930449_1_1.png"
+      }
     },
     "right_for_my_dog": {
-      "type": "right-for-my-dog"
+      "type": "right-for-my-dog",
+      "settings": {
+        "heading": "Is this right for my dog?",
+        "image": "shopify://shop_images/2150930449_1_1_8a782b15-96fc-46aa-9ae2-22efb85cebe9.png"
+      }
     },
     "you_might_also_like": {
-      "type": "product-also-like"
+      "type": "product-also-like",
+      "settings": {
+        "heading": "You might also like",
+        "collection": ""
+      }
     },
     "vet_check": {
-      "type": "vet-check"
+      "type": "vet-check",
+      "settings": {
+        "image": "shopify://shop_images/close-up-veterinarian-taking-care-dog_1.png",
+        "heading": "Check with my vet",
+        "text": "",
+        "button_label": "Consult Now",
+        "button_url": ""
+      }
     },
     "faq": {
-      "type": "faq"
+      "type": "faq",
+      "settings": {
+        "heading": "FAQ's"
+      }
     },
     "certified_trusted": {
-      "type": "certified-trusted"
+      "type": "certified-trusted",
+      "blocks": {
+        "logo_DAtert": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Layer_1.png",
+            "alt_text": ""
+          }
+        },
+        "logo_YTQh97": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Vector_1.png",
+            "alt_text": ""
+          }
+        },
+        "logo_eVhiiG": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Layer_1.png",
+            "alt_text": ""
+          }
+        },
+        "logo_7TKB6X": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Vector_1.png",
+            "alt_text": ""
+          }
+        },
+        "logo_P9FabJ": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Layer_1.png",
+            "alt_text": ""
+          }
+        },
+        "logo_XUVUHM": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Vector_1.png",
+            "alt_text": ""
+          }
+        },
+        "logo_4T7E3t": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Layer_1.png",
+            "alt_text": ""
+          }
+        },
+        "logo_bYFYwr": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Vector_1.png",
+            "alt_text": ""
+          }
+        },
+        "logo_gKEfNw": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Layer_1.png",
+            "alt_text": ""
+          }
+        },
+        "logo_R63rHi": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Vector_1.png",
+            "alt_text": ""
+          }
+        },
+        "logo_PEatRA": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Layer_1.png",
+            "alt_text": ""
+          }
+        },
+        "logo_4Hi3Xm": {
+          "type": "logo",
+          "settings": {
+            "logo": "shopify://shop_images/Vector_1.png",
+            "alt_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "logo_DAtert",
+        "logo_YTQh97",
+        "logo_eVhiiG",
+        "logo_7TKB6X",
+        "logo_P9FabJ",
+        "logo_XUVUHM",
+        "logo_4T7E3t",
+        "logo_bYFYwr",
+        "logo_gKEfNw",
+        "logo_R63rHi",
+        "logo_PEatRA",
+        "logo_4Hi3Xm"
+      ],
+      "settings": {
+        "heading": "Certified & Trusted"
+      }
     }
   },
   "order": [
     "main",
     "reviews",
     "love_at_first_bite",
-    "product_description",
     "premium_ingredients",
     "feeding_guide",
     "benefits_hero",
