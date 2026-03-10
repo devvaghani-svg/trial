@@ -1,0 +1,42 @@
+<section class="prod-desc-section">
+
+  <div class="prod-desc-box">
+    <h3 class="prod-desc-title">{{ section.settings.title | default: 'Description' }}</h3>
+    <div class="prod-desc-content">
+      {% if section.settings.custom_text != blank %}
+        {{ section.settings.custom_text }}
+      {% elsif product.description != blank %}
+        {{ product.description }}
+      {% else %}
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, nisi vel consectetur interdum, vitae facilisis arcu condimentum. Sed euismod augue vel lorem tincidunt, at fermentum nunc aliquam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae.</p>
+        <p>Quisque facilisis erat a dui. Nam malesuada ornare dolor. Cras gravida, diam sit amet rhoncus ornare, erat elit consectetuer erat, id egestas pede nibh eget odio.</p>
+      {% endif %}
+    </div>
+  </div>
+
+</section>
+
+
+{% schema %}
+{
+  "name": "Product Description",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Description"
+    },
+    {
+      "type": "richtext",
+      "id": "custom_text",
+      "label": "Custom Description (overrides product description)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Description"
+    }
+  ]
+}
+{% endschema %}

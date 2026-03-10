@@ -1,0 +1,126 @@
+{% stylesheet %}
+.feeding-guide {
+  padding: 60px 80px;
+  background: #fff;
+  border: 0.6px solid #3a3a3e;
+}
+
+.feeding-guide__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.feeding-guide__heading {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #3a3a3e;
+}
+
+.feeding-guide__content {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #444;
+}
+
+.feeding-guide__content p {
+  margin-bottom: 12px;
+}
+
+.feeding-guide__image-wrap {
+  width: 100%;
+}
+
+.feeding-guide__image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #eee;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .feeding-guide {
+    padding: 40px 18px;
+  }
+
+  .feeding-guide__inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .feeding-guide__image-wrap {
+    order: -1;
+  }
+
+  .feeding-guide__heading {
+    font-size: 28px;
+  }
+
+  .feeding-guide__content {
+    font-size: 14px;
+  }
+}
+{% endstylesheet %}
+
+<section class="feeding-guide">
+  <div class="feeding-guide__inner">
+    <div class="feeding-guide__text">
+      <h2 class="feeding-guide__heading">{{ section.settings.heading | default: 'Feeding guide' }}</h2>
+      <div class="feeding-guide__content">
+        {% if section.settings.content != blank %}
+          {{ section.settings.content }}
+        {% else %}
+          <p>Follow the recommended feeding guide based on your dog's weight and size for optimal results.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="feeding-guide__image-wrap">
+      {% if section.settings.image %}
+        <img
+          src="{{ section.settings.image | image_url: width: 900 }}"
+          alt="{{ section.settings.image.alt | default: 'Feeding guide' | escape }}"
+          class="feeding-guide__image"
+          loading="lazy"
+        >
+      {% else %}
+        <div class="feeding-guide__image"></div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Feeding Guide",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Feeding guide"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Product Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feeding Guide"
+    }
+  ]
+}
+{% endschema %}

@@ -1,151 +1,290 @@
 <section class="custom-product">
 
-<div class="product-container">
+  <div class="product-container">
 
-  <!-- LEFT SIDE -->
-  <div class="product-gallery">
+    <!-- LEFT: Gallery -->
+    <div class="product-gallery">
 
-    <div class="main-image">
-      <img id="main-product-image" src="{{ product.featured_image | image_url: width: 900 }}">
+      <div class="main-image">
+        <button type="button" class="gallery-arrow gallery-prev" onclick="galleryPrev()" aria-label="Previous image">&#8249;</button>
+        <img id="main-product-image" src="{{ product.featured_image | image_url: width: 900 }}" alt="{{ product.featured_image.alt | escape }}">
+        <button type="button" class="gallery-arrow gallery-next" onclick="galleryNext()" aria-label="Next image">&#8250;</button>
+      </div>
+
+      <div class="thumbnail-row">
+        {% for image in product.images %}
+          <img
+            src="{{ image | image_url: width: 200 }}"
+            class="thumb{% if forloop.first %} active-thumb{% endif %}"
+            data-full="{{ image | image_url: width: 900 }}"
+            onclick="changeImage(this)"
+            alt="{{ image.alt | escape }}"
+          >
+        {% endfor %}
+      </div>
+
     </div>
 
-    <div class="thumbnail-row">
-      {% for image in product.images %}
-        <img 
-          src="{{ image | image_url: width: 200 }}"
-          class="thumb"
-          onclick="changeImage(this)"
-        >
-        
-      {% endfor %}
-    </div>
+    <!-- RIGHT: Info -->
+    <div class="product-info">
 
-  </div>
+      <span class="top-badge">India's #1 Advanced Dog For Food</span>
 
+      <h1 class="product-title">{{ product.title }}</h1>
 
-  <!-- RIGHT SIDE -->
-  <div class="product-info">
+      <div class="price-box">
+        <span class="price" id="product-price">{{ product.selected_or_first_available_variant.price | money }}</span>
+        {% if product.selected_or_first_available_variant.compare_at_price %}
+          <span class="compare-price" id="product-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+        {% endif %}
+      </div>
 
-    <span class="top-badge">
-      India's #1 Advanced Dog For Food
-    </span>
+      <p class="tax">MRP Inclusive of all taxes</p>
 
-    <h1 class="product-title">
-      {{ product.title }}
-    </h1>
+      <div class="benefit-box">
+        <span class="benefit-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 21C12 21 3 14 3 8.5C3 6.01 5.01 4 7.5 4C9.24 4 10.75 5 11.5 6.5L12 7.5L12.5 6.5C13.25 5 14.76 4 16.5 4C18.99 4 21 6.01 21 8.5C21 14 12 21 12 21Z" fill="#ff4f8b" stroke="#ff4f8b" stroke-width="1.5"/>
+          </svg>
+        </span>
+        <div class="benefit-text">
+          <strong>30% Digestive Health Improvement</strong>
+          <p>Results may vary based on pet size, diet, and <a href="{{ section.settings.reports_url }}" class="see-reports">See Reports</a></p>
+        </div>
+      </div>
 
-    <div class="price-box">
+      <!-- VARIANTS -->
+      <div class="variant-selector">
+        <p class="variant-title">SELECT SIZE</p>
+        <div class="variant-buttons">
+          {% for variant in product.variants %}
+            <button
+              type="button"
+              class="variant-pill{% if variant.id == product.selected_or_first_available_variant.id %} active{% endif %}"
+              data-variant-id="{{ variant.id }}"
+              data-price="{{ variant.price }}"
+              data-compare-price="{{ variant.compare_at_price }}"
+            >
+              {% if variant.metafields.custom.badge != blank %}
+                <span class="variant-badge">{{ variant.metafields.custom.badge }}</span>
+              {% endif %}
+              {{ variant.title }}
+            </button>
+          {% endfor %}
+        </div>
+      </div>
 
-      <span class="price">
-        {{ product.selected_or_first_available_variant.price | money }}
-      </span>
+      <!-- CART FORM -->
+      <form method="post" action="/cart/add" id="product-form">
+        <input type="hidden" name="id" id="variant-id" value="{{ product.selected_or_first_available_variant.id }}">
 
-      {% if product.selected_or_first_available_variant.compare_at_price %}
-      <span class="compare-price">
-        {{ product.selected_or_first_available_variant.compare_at_price | money }}
-      </span>
+        <div class="cart-row">
+          <div class="qty-wrapper">
+            <button type="button" class="qty-btn minus">-</button>
+            <input type="number" name="quantity" value="1" min="1" class="qty-input">
+            <button type="button" class="qty-btn plus">+</button>
+          </div>
+
+          <button type="submit" class="add-cart">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+              <path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/>
+            </svg>
+            ADD TO CART
+          </button>
+        </div>
+      </form>
+
+      <button class="buy-now">BUY IT NOW</button>
+
+      <!-- COUPON CARDS -->
+      {% if section.settings.coupon_1_code != blank or section.settings.coupon_2_code != blank %}
+        <div class="coupon-cards">
+          {% if section.settings.coupon_1_code != blank %}
+            <div class="coupon-card">
+              <span class="coupon-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0c5f5f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
+                  <line x1="7" y1="7" x2="7.01" y2="7"/>
+                </svg>
+              </span>
+              <div class="coupon-details">
+                <strong>{{ section.settings.coupon_1_price }}</strong>
+                <p>{{ section.settings.coupon_1_label }}</p>
+              </div>
+              <button type="button" class="coupon-copy-btn" data-code="{{ section.settings.coupon_1_code }}" aria-label="Copy coupon code">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                </svg>
+              </button>
+            </div>
+          {% endif %}
+          {% if section.settings.coupon_2_code != blank %}
+            <div class="coupon-card">
+              <span class="coupon-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0c5f5f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/>
+                  <line x1="7" y1="7" x2="7.01" y2="7"/>
+                </svg>
+              </span>
+              <div class="coupon-details">
+                <strong>{{ section.settings.coupon_2_price }}</strong>
+                <p>{{ section.settings.coupon_2_label }}</p>
+              </div>
+              <button type="button" class="coupon-copy-btn" data-code="{{ section.settings.coupon_2_code }}" aria-label="Copy coupon code">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                </svg>
+              </button>
+            </div>
+          {% endif %}
+        </div>
       {% endif %}
 
     </div>
 
-    <p class="tax">MRP Inclusive of all taxes</p>
-
-
-    <div class="benefit-box">
-      <strong>30% Digestive Health Improvement</strong>
-      <p>Results may vary based on pet size, diet</p>
-    </div>
-
-
-    <!-- VARIANTS -->
-    <div class="variant-selector">
-
-      <p class="variant-title">SELECT SIZE</p>
-
-      <div class="variant-buttons">
-
-        {% for variant in product.variants %}
-          <button class="variant-pill"
-          data-variant-id="{{ variant.id }}">
-            {{ variant.title }}
-          </button>
-        {% endfor %}
-
-      </div>
-
-    </div>
-
-
-    <!-- CART -->
-    <form method="post" action="/cart/add">
-
-      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-
-      <div class="cart-row">
-
-        <div class="qty-wrapper">
-
-<button type="button" class="qty-btn minus">-</button>
-
-<input type="number" name="quantity" value="1" min="1" class="qty-input">
-
-<button type="button" class="qty-btn plus">+</button>
-
-</div>
-
-        <button type="submit" class="add-cart">
-          ADD TO CART
-        </button>
-
-      </div>
-
-    </form>
-
-
-    <button class="buy-now">
-      BUY IT NOW
-    </button>
-
   </div>
 
-</div>
-<div class="marquee-bar">
-
-  <div class="marquee-track">
-
-    <span>Targets Root Cause 🐾</span>
-    <span>Vet Approved 🐾</span>
-    <span>Scientifically Formulated 🐾</span>
-    <span>Targets Root Cause 🐾</span>
-    <span>Vet Approved 🐾</span>
-    <span>Scientifically Formulated 🐾</span>
-<span>Targets Root Cause 🐾</span>
-    <span>Vet Approved 🐾</span>
-    <span>Scientifically Formulated 🐾</span>
-    <span>Targets Root Cause 🐾</span>
-    <span>Vet Approved 🐾</span>
-    <span>Scientifically Formulated 🐾</span>
+  <div class="marquee-bar">
+    <div class="marquee-track">
+      <span>Targets Root Cause 🐾</span>
+      <span>Vet Approved 🐾</span>
+      <span>Scientifically Formulated 🐾</span>
+      <span>Targets Root Cause 🐾</span>
+      <span>Vet Approved 🐾</span>
+      <span>Scientifically Formulated 🐾</span>
+      <span>Targets Root Cause 🐾</span>
+      <span>Vet Approved 🐾</span>
+      <span>Scientifically Formulated 🐾</span>
+      <span>Targets Root Cause 🐾</span>
+      <span>Vet Approved 🐾</span>
+      <span>Scientifically Formulated 🐾</span>
+    </div>
   </div>
 
-</div>
 </section>
 
 
 <script>
+  const galleryImages = [
+    {% for image in product.images %}"{{ image | image_url: width: 900 }}"{% unless forloop.last %},{% endunless %}{% endfor %}
+  ];
+  let currentIndex = 0;
 
-function changeImage(el){
-document.getElementById("main-product-image").src = el.src;
-}
-document.querySelector(".plus").addEventListener("click", function(){
-let input = document.querySelector(".qty-input");
-input.value = parseInt(input.value) + 1;
-});
+  function changeImage(el) {
+    document.getElementById('main-product-image').src = el.dataset.full;
+    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active-thumb'));
+    el.classList.add('active-thumb');
+    currentIndex = Array.from(document.querySelectorAll('.thumb')).indexOf(el);
+  }
 
-document.querySelector(".minus").addEventListener("click", function(){
-let input = document.querySelector(".qty-input");
-if(input.value > 1){
-input.value = parseInt(input.value) - 1;
-}
-});
+  function galleryNext() {
+    currentIndex = (currentIndex + 1) % galleryImages.length;
+    updateMainImage(currentIndex);
+  }
 
+  function galleryPrev() {
+    currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
+    updateMainImage(currentIndex);
+  }
+
+  function updateMainImage(index) {
+    document.getElementById('main-product-image').src = galleryImages[index];
+    const thumbs = document.querySelectorAll('.thumb');
+    thumbs.forEach(t => t.classList.remove('active-thumb'));
+    if (thumbs[index]) thumbs[index].classList.add('active-thumb');
+  }
+
+  // Variant switching
+  document.querySelectorAll('.variant-pill').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.variant-pill').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      document.getElementById('variant-id').value = this.dataset.variantId;
+
+      const price = parseInt(this.dataset.price);
+      const comparePrice = parseInt(this.dataset.comparePrice);
+      if (price) document.getElementById('product-price').textContent = '₹' + (price / 100).toFixed(2);
+
+      const comparePriceEl = document.getElementById('product-compare-price');
+      if (comparePriceEl) {
+        if (comparePrice) {
+          comparePriceEl.textContent = '₹' + (comparePrice / 100).toFixed(2);
+          comparePriceEl.style.display = '';
+        } else {
+          comparePriceEl.style.display = 'none';
+        }
+      }
+    });
+  });
+
+  // Quantity
+  document.querySelector('.plus').addEventListener('click', function() {
+    let input = document.querySelector('.qty-input');
+    input.value = parseInt(input.value) + 1;
+  });
+
+  document.querySelector('.minus').addEventListener('click', function() {
+    let input = document.querySelector('.qty-input');
+    if (parseInt(input.value) > 1) input.value = parseInt(input.value) - 1;
+  });
+
+  // Coupon copy
+  document.querySelectorAll('.coupon-copy-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const svgBackup = this.innerHTML;
+      navigator.clipboard.writeText(this.dataset.code).then(() => {
+        this.textContent = '✓';
+        setTimeout(() => { this.innerHTML = svgBackup; }, 2000);
+      });
+    });
+  });
 </script>
+
+
+{% schema %}
+{
+  "name": "Product Hero",
+  "settings": [
+    {
+      "type": "url",
+      "id": "reports_url",
+      "label": "See Reports URL"
+    },
+    {
+      "type": "text",
+      "id": "coupon_1_price",
+      "label": "Coupon 1 — Price Text",
+      "default": "Get it for ₹3,190"
+    },
+    {
+      "type": "text",
+      "id": "coupon_1_label",
+      "label": "Coupon 1 — Label",
+      "default": "Copy code to get 10% off"
+    },
+    {
+      "type": "text",
+      "id": "coupon_1_code",
+      "label": "Coupon 1 — Discount Code"
+    },
+    {
+      "type": "text",
+      "id": "coupon_2_price",
+      "label": "Coupon 2 — Price Text",
+      "default": "Get it for ₹3,190"
+    },
+    {
+      "type": "text",
+      "id": "coupon_2_label",
+      "label": "Coupon 2 — Label",
+      "default": "Copy code to get 10% off"
+    },
+    {
+      "type": "text",
+      "id": "coupon_2_code",
+      "label": "Coupon 2 — Discount Code"
+    }
+  ]
+}
+{% endschema %}

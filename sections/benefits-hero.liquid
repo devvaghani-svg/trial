@@ -1,0 +1,211 @@
+{% stylesheet %}
+.benefits-hero {
+  background: #E52888;
+  padding: 56px 80px;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+
+.benefits-hero::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1280px;
+  height: 1280px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.benefits-hero__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.benefits-hero__heading {
+  font-size: 58px;
+  font-weight: 700;
+  font-family: Cafeteria, var(--font-primary--family), sans-serif;
+  line-height: 1.1;
+  margin-bottom: 44px;
+  max-width: 454px;
+  color: #fff;
+}
+
+/* Desktop: 2 columns, 90px gap between, each column has 2 features stacked 44px apart */
+.benefits-hero__features {
+  display: grid;
+  grid-template-columns: 362px 422px;
+  gap: 44px 90px;
+  max-width: 874px;
+}
+
+.benefit-feature {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.benefit-feature__icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.benefit-feature__icon img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.benefit-feature__icon svg {
+  color: #E52888;
+}
+
+.benefit-feature__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.benefit-feature__desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .benefits-hero {
+    padding: 48px 18px;
+  }
+
+  .benefits-hero__heading {
+    font-size: 40px;
+    max-width: 309px;
+    margin-bottom: 32px;
+  }
+
+  /* Mobile: single column, 4 items, each 72px tall, icon 30x30, gap 8px, 24px between items */
+  .benefits-hero__features {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 100%;
+  }
+
+  .benefit-feature {
+    gap: 8px;
+    align-items: center;
+    min-height: 72px;
+  }
+
+  .benefit-feature__icon {
+    flex-shrink: 0;
+  }
+
+  .benefit-feature__title {
+    margin-bottom: 8px;
+  }
+}
+{% endstylesheet %}
+
+<section class="benefits-hero">
+  <div class="benefits-hero__inner">
+    <h2 class="benefits-hero__heading">{{ section.settings.heading | default: 'Benefits your pet can feel.' }}</h2>
+
+    <div class="benefits-hero__features">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <div class="benefit-feature" {{ block.shopify_attributes }}>
+            <div class="benefit-feature__icon">
+              {% if block.settings.icon %}
+                <img src="{{ block.settings.icon | image_url: width: 60 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+              {% else %}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E52888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+              {% endif %}
+            </div>
+            <div class="benefit-feature__text">
+              {% if block.settings.title != blank %}
+                <h3 class="benefit-feature__title">{{ block.settings.title }}</h3>
+              {% endif %}
+              {% if block.settings.description != blank %}
+                <p class="benefit-feature__desc">{{ block.settings.description }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        {% assign default_benefits = "Gut Health Support|4 Billion CFUs of live strains to build good bacteria and defend against allergies.,Immune Boost|Strengthen your dog's natural defenses and improve overall well-being daily.,Coat & Skin Health|Reduces tear stains, dull coat, and itching caused by digestive imbalance.,Better Breath|Targets the root cause of bad breath with probiotics and digestive enzymes." | split: "," %}
+        {% for item in default_benefits %}
+          {% assign parts = item | split: "|" %}
+          <div class="benefit-feature">
+            <div class="benefit-feature__icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E52888" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <div class="benefit-feature__text">
+              <h3 class="benefit-feature__title">{{ parts[0] }}</h3>
+              <p class="benefit-feature__desc">{{ parts[1] }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefits Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Benefits your pet can feel."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefits Hero"
+    }
+  ]
+}
+{% endschema %}

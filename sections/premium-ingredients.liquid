@@ -1,0 +1,153 @@
+{% stylesheet %}
+.premium-ingredients {
+  padding: 60px 80px;
+  background: #F9F3F1;
+}
+
+.premium-ingredients__heading {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  color: #3a3a3e;
+}
+
+.premium-ingredients__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.ingredient-card {
+  border: 0.6px solid #3a3a3e;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ingredient-card__image-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #eee;
+}
+
+.ingredient-card__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ingredient-card__body {
+  padding: 16px;
+}
+
+.ingredient-card__name {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #3a3a3e;
+}
+
+.ingredient-card__desc {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+@media (max-width: 767px) {
+  .premium-ingredients {
+    padding: 40px 18px;
+  }
+
+  .premium-ingredients__heading {
+    font-size: 28px;
+  }
+
+  .premium-ingredients__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+{% endstylesheet %}
+
+<section class="premium-ingredients">
+  <h2 class="premium-ingredients__heading">{{ section.settings.heading | default: 'Premium Ingredients' }}</h2>
+
+  <div class="premium-ingredients__grid">
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        <div class="ingredient-card" {{ block.shopify_attributes }}>
+          <div class="ingredient-card__image-wrap">
+            {% if block.settings.image %}
+              <img
+                src="{{ block.settings.image | image_url: width: 600 }}"
+                alt="{{ block.settings.image.alt | default: block.settings.name | escape }}"
+                loading="lazy"
+              >
+            {% endif %}
+          </div>
+          <div class="ingredient-card__body">
+            {% if block.settings.name != blank %}
+              <h3 class="ingredient-card__name">{{ block.settings.name }}</h3>
+            {% endif %}
+            {% if block.settings.description != blank %}
+              <p class="ingredient-card__desc">{{ block.settings.description }}</p>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      {% for i in (1..4) %}
+        <div class="ingredient-card">
+          <div class="ingredient-card__image-wrap"></div>
+          <div class="ingredient-card__body">
+            <h3 class="ingredient-card__name">Ingredient Name</h3>
+            <p class="ingredient-card__desc">Key benefit description for this premium ingredient.</p>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Premium Ingredients",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Premium Ingredients"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Ingredient Name"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium Ingredients"
+    }
+  ]
+}
+{% endschema %}

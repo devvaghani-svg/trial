@@ -1,0 +1,271 @@
+{% stylesheet %}
+.right-for-dog {
+  padding: 60px 80px;
+  background: #F9F3F1;
+}
+
+.right-for-dog__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 628px 630px;
+  gap: 22px;
+  align-items: flex-start;
+}
+
+/* Desktop: image left, content right */
+.right-for-dog__image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #CEE95E;
+  display: block;
+}
+
+.right-for-dog__content {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.right-for-dog__heading {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #3a3a3e;
+  margin: 0;
+}
+
+.right-for-dog__checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Each item: 80x80 pink icon + 262px text, 12px gap, 16px between items */
+.right-for-dog__item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.right-for-dog__item:last-child {
+  border-bottom: none;
+}
+
+.right-for-dog__icon {
+  width: 80px;
+  height: 80px;
+  background: #E52888;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.right-for-dog__icon img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.right-for-dog__item-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.right-for-dog__item-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #3a3a3e;
+  margin: 0;
+}
+
+.right-for-dog__item-desc {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .right-for-dog {
+    padding: 40px 18px;
+  }
+
+  .right-for-dog__inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Mobile: heading + image together first, then checklist */
+  .right-for-dog__image-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .right-for-dog__heading-mobile {
+    font-size: 28px;
+    font-weight: 700;
+    color: #3a3a3e;
+    margin: 0;
+  }
+
+  .right-for-dog__image {
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+  }
+
+  .right-for-dog__heading {
+    display: none;
+  }
+
+  .right-for-dog__content {
+    gap: 0;
+  }
+
+  .right-for-dog__item {
+    gap: 12px;
+    padding: 16px 0;
+  }
+
+  .right-for-dog__icon {
+    width: 80px;
+    height: 80px;
+  }
+}
+{% endstylesheet %}
+
+<section class="right-for-dog">
+  <div class="right-for-dog__inner">
+
+    <div class="right-for-dog__image-wrap">
+      {%- comment -%}Mobile heading appears above image{%- endcomment -%}
+      <h2 class="right-for-dog__heading-mobile">{{ section.settings.heading | default: 'Is this right for my dog?' }}</h2>
+
+      {% if section.settings.image %}
+        <img
+          src="{{ section.settings.image | image_url: width: 900 }}"
+          alt="{{ section.settings.image.alt | default: 'Is this right for my dog' | escape }}"
+          class="right-for-dog__image"
+          loading="lazy"
+        >
+      {% else %}
+        <div class="right-for-dog__image"></div>
+      {% endif %}
+    </div>
+
+    <div class="right-for-dog__content">
+      <h2 class="right-for-dog__heading">{{ section.settings.heading | default: 'Is this right for my dog?' }}</h2>
+
+      <div class="right-for-dog__checklist">
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            <div class="right-for-dog__item" {{ block.shopify_attributes }}>
+              <div class="right-for-dog__icon">
+                {% if block.settings.icon %}
+                  <img src="{{ block.settings.icon | image_url: width: 100 }}" alt="{{ block.settings.title | escape }}" loading="lazy">
+                {% else %}
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                {% endif %}
+              </div>
+              <div class="right-for-dog__item-text">
+                {% if block.settings.title != blank %}
+                  <h3 class="right-for-dog__item-title">{{ block.settings.title }}</h3>
+                {% endif %}
+                {% if block.settings.description != blank %}
+                  <p class="right-for-dog__item-desc">{{ block.settings.description }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="right-for-dog__item">
+            <div class="right-for-dog__icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="right-for-dog__item-text">
+              <h3 class="right-for-dog__item-title">Dogs with digestive issues</h3>
+              <p class="right-for-dog__item-desc">Ideal for dogs experiencing bloating, gas, or irregular digestion.</p>
+            </div>
+          </div>
+          <div class="right-for-dog__item">
+            <div class="right-for-dog__icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="right-for-dog__item-text">
+              <h3 class="right-for-dog__item-title">Dogs with allergies & skin issues</h3>
+              <p class="right-for-dog__item-desc">Helps reduce tear stains, paw licking, and itchy skin from the inside out.</p>
+            </div>
+          </div>
+          <div class="right-for-dog__item">
+            <div class="right-for-dog__icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="right-for-dog__item-text">
+              <h3 class="right-for-dog__item-title">All breeds & all sizes</h3>
+              <p class="right-for-dog__item-desc">Safe and effective for dogs of all ages, breeds, and sizes.</p>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Right For My Dog",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Is this right for my dog?"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Dog Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Checklist Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon (optional)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Right For My Dog"
+    }
+  ]
+}
+{% endschema %}
