@@ -11,6 +11,8 @@ body {
   margin: 0;
   min-height: 100vh;
   height: 100%;
+  background: #F9F3F1;
+
   font-family: var(--font-primary--family);
 }
 
@@ -391,3 +393,67 @@ justify-content:center;
 }
 
 }
+
+.marquee-bar{
+  width:100%;
+  height:40px;
+  background:#ff2b8a;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  margin-top:40px;
+  }
+  
+  .marquee-track{
+  display:flex;
+  gap:19px;
+  white-space:nowrap;
+  animation:marqueeMove 20s linear infinite;
+  padding:10px 16px;
+  }
+  
+  .marquee-track span{
+  color:white;
+  font-family:Cabin, sans-serif;
+  font-size:16px;
+  }
+  
+  @keyframes marqueeMove{
+  0%{
+  transform:translateX(0);
+  }
+  100%{
+  transform:translateX(-50%);
+  }
+  }
+
+  .qty-wrapper{
+    display:flex;
+    align-items:center;
+    border:2px solid #0c5f5f;
+    border-radius:12px;
+    width:120px;
+    overflow:hidden;
+    }
+    
+    .qty-btn{
+    width:40px;
+    height:40px;
+    border:none;
+    background:#e5ecec;
+    font-size:20px;
+    cursor:pointer;
+    }
+    
+    .qty-input{
+    width:40px;
+    text-align:center;
+    border:none;
+    font-size:18px;
+    }
+    
+    .qty-input::-webkit-inner-spin-button,
+    .qty-input::-webkit-outer-spin-button{
+    -webkit-appearance:none;
+    margin:0;
+    }

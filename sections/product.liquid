@@ -16,6 +16,7 @@
           class="thumb"
           onclick="changeImage(this)"
         >
+        
       {% endfor %}
     </div>
 
@@ -82,7 +83,15 @@
 
       <div class="cart-row">
 
-        <input type="number" name="quantity" value="1" min="1" class="qty">
+        <div class="qty-wrapper">
+
+<button type="button" class="qty-btn minus">-</button>
+
+<input type="number" name="quantity" value="1" min="1" class="qty-input">
+
+<button type="button" class="qty-btn plus">+</button>
+
+</div>
 
         <button type="submit" class="add-cart">
           ADD TO CART
@@ -100,7 +109,25 @@
   </div>
 
 </div>
+<div class="marquee-bar">
 
+  <div class="marquee-track">
+
+    <span>Targets Root Cause 🐾</span>
+    <span>Vet Approved 🐾</span>
+    <span>Scientifically Formulated 🐾</span>
+    <span>Targets Root Cause 🐾</span>
+    <span>Vet Approved 🐾</span>
+    <span>Scientifically Formulated 🐾</span>
+<span>Targets Root Cause 🐾</span>
+    <span>Vet Approved 🐾</span>
+    <span>Scientifically Formulated 🐾</span>
+    <span>Targets Root Cause 🐾</span>
+    <span>Vet Approved 🐾</span>
+    <span>Scientifically Formulated 🐾</span>
+  </div>
+
+</div>
 </section>
 
 
@@ -109,5 +136,16 @@
 function changeImage(el){
 document.getElementById("main-product-image").src = el.src;
 }
+document.querySelector(".plus").addEventListener("click", function(){
+let input = document.querySelector(".qty-input");
+input.value = parseInt(input.value) + 1;
+});
+
+document.querySelector(".minus").addEventListener("click", function(){
+let input = document.querySelector(".qty-input");
+if(input.value > 1){
+input.value = parseInt(input.value) - 1;
+}
+});
 
 </script>
