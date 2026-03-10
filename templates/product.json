@@ -1,19 +1,12 @@
 {
   "sections": {
     "main": {
-<<<<<<< HEAD
       "type": "product",
       "settings": {}
     },
     "reviews": {
       "type": "customer_review",
       "settings": {}
-=======
-      "type": "product"
-    },
-    "reviews": {
-      "type": "customer_review"
->>>>>>> 39855c2 (final page)
     }
   },
   "order": [
